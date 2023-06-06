@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: music-gateway
+  cloud:
+    nacos:
+      config:
+        server-addr: localhost:8848
+        file-extension: yml
+        namespace: dev
+        timeout: 5000
+        config-long-poll-timeout: 1000
+        config-retry-time: 100000
+        max-retry: 3
+        refresh-enabled: true
+        enable-remote-sync-config: true
+

@@ -1,0 +1,38 @@
+server:
+  port: 30000
+  error:
+    include-message: always
+
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+        heart-beat-interval: 5000
+        heart-beat-timeout: 15000
+        cluster-name: Cluster-A
+        namespace: dev
+        group: myGroup
+        register-enabled: true
+        watch:
+          enabled: true
+        watch-delay: 30000
+    gateway:
+      discovery:
+        locator:
+          lower-case-service-id: true
+          enabled: true
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+
+jwt:
+  secret: JwtSecretKey
+
+#logging:
+#  level: debug

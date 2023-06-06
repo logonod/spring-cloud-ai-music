@@ -1,0 +1,122 @@
+# 项目的启动端口
+server:
+  port: 20001
+  error:
+    include-message: always
+
+spring:
+  application:
+    # 定义项目名称
+    name: spleeter-serv
+  datasource:
+    # mysql数据源
+    username: root
+    password: 1234
+    url: jdbc:mysql://127.0.0.1:3306/ai_music_db?autoReconnect=true&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # 连接池
+    hikari:
+      pool-name: SpleeterHikari
+      connection-timeout: 5000
+      idle-timeout: 30000
+      maximum-pool-size: 10
+      minimum-idle: 5
+      max-lifetime: 60000
+      auto-commit: true
+  jpa:
+    show-sql: true
+    hibernate:
+      # 在生产环境全部为none，防止ddl结构被自动执行
+      ddl-auto: none
+    properties:
+      hibernate.format_sql: true
+      hibernate.show_sql: true
+    open-in-view: false
+  cloud:
+    nacos:
+      discovery:
+        # 可以配置多个，逗号分隔
+        server-addr: localhost:8848
+        # 默认就是application name，一般不用配置
+        service: spleeter-serv
+        # nacos客户端向服务端发送心跳的时间间隔，时间单位其实是ms
+        heart-beat-interval: 5000
+        # 服务端没有接受到客户端心跳请求就将其设为不健康的时间间隔，默认为15s
+        # 注：推荐值该值为15s即可，如果有的业务线希望服务下线或者出故障时希望尽快被发现，可以适当减少该值
+        heart-beat-timeout: 15000
+        # [注意] 这个IP地址如果更换网络后变化，会导致服务调用失败，建议先不要设置
+        # ip: 172.20.7.228
+        # 元数据部分 - 可以自己随便定制
+        # metadata:
+        #   mydata: abc
+        # 客户端在启动时是否读取本地配置项(一个文件)来获取服务列表
+        # 注：推荐该值为false，若改成true。则客户端会在本地的一个文件中保存服务信息，当下次宕机启动时，会优先读取本地的配置对外提供服务。
+        naming-load-cache-at-start: false
+        # 创建不同的集群
+        cluster-name: Cluster-A
+        # 命名空间ID，Nacos通过不同的命名空间来区分不同的环境，进行数据隔离，
+        # 服务消费时只能消费到对应命名空间下的服务。
+        # [注意]需要在nacos-server中创建好namespace，然后把id copy进来
+        namespace: dev
+        # [注意]两个服务如果存在上下游调用关系，必须配置相同的group才能发起访问
+        group: myGroup
+        # 向注册中心注册服务，默认为true
+        # 如果只消费服务，不作为服务提供方，倒是可以设置成false，减少开销
+        register-enabled: true
+        # 类似长连接监听服务端信息变化的功能
+        watch:
+          enabled: true
+        watch-delay: 30000
+    stream:
+      # 如果你项目里只对接一个中间件，那么不用定义binders
+      # 当系统要定义多个不同消息中间件的时候，使用binders定义
+      binders:
+        my-rabbit:
+          type: rabbit # 消息中间件类型
+          environment: # 连接信息
+            spring:
+              rabbitmq:
+                host: localhost
+                port: 5672
+                username: user
+                password: password
+      bindings:
+        # 添加coupon - Producer
+        addSpleeter-out-0:
+          destination: request-spleeter-topic
+          content-type: application/json
+          binder: my-rabbit
+        # 添加coupon - Consumer
+        addSpleeter-in-0:
+          destination: request-spleeter-topic
+          content-type: application/json
+          # 消费组，同一个组内只能被消费一次
+          group: add-spleeter-group
+          binder: my-rabbit
+          consumer:
+            # 如果最大尝试次数为1，即不重试
+            # 默认是做3次尝试
+            max-attempts: 4
+            # 两次重试之间的初始间隔
+            backOffInitialInterval: 60000
+            # 重试最大间隔
+            backOffMaxInterval: 600000
+            # 每次重试后，间隔时间乘以的系数
+            backOffMultiplier: 2
+            # 如果某个异常你不想重试，写在这里
+        #            retryableExceptions:
+        #              java.lang.IllegalArgumentException: false
+      function:
+        definition: addSpleeter
+
+spleeter:
+  command: "D:\\Users\\Administrator\\anaconda3\\envs\\py310\\Scripts\\spleeter.EXE separate -o %s %s"
+
+file:
+  upload:
+    path: D:\Downloads\tmp\upload-tmp
+
+logging:
+  level:
+    com.broadview.coupon: debug

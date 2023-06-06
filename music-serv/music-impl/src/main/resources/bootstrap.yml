@@ -1,0 +1,32 @@
+spring:
+  application:
+    # 定义项目名称
+    name: music-serv
+  cloud:
+    nacos:
+      config:
+        # nacos config服务器的地址
+        server-addr: localhost:8848
+        file-extension: yml
+        # prefix: 文件名前缀，默认是spring.application.name
+        # 如果没有指定命令空间，则默认命令空间为PUBLIC
+        namespace: dev
+        # 如果没有配置Group，则默认值为DEFAULT_GROUP
+        group: myGroup
+        # 从Nacos读取配置项的超时时间
+        timeout: 5000
+        # 长轮询超时时间
+        config-long-poll-timeout: 10000
+        # 轮询的重试时间
+        config-retry-time: 2000
+        # 长轮询最大重试次数
+        max-retry: 3
+        # 开启监听和自动刷新
+        refresh-enabled: true
+        # Nacos的扩展配置项，数字越大优先级越高
+        extension-configs:
+          - dataId: music-serv.yml
+            group: myGroup
+            refresh: true
+
+

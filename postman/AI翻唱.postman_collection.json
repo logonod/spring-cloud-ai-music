@@ -1,0 +1,133 @@
+{
+	"info": {
+		"_postman_id": "0f5749f6-8cd4-4508-b77e-2e06ea8b6bdf",
+		"name": "AI翻唱",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26931033"
+	},
+	"item": [
+		{
+			"name": "music",
+			"item": [
+				{
+					"name": "创建翻唱",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/d:/Downloads/tmp/accompaniment.wav"
+								},
+								{
+									"key": "info",
+									"value": "{\n    \"user\":1,\n    \"title\":\"七里香\",\n    \"artist\": \"周杰伦\",\n    \"ai\": \"孙燕姿\"\n}",
+									"contentType": "application/json",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:20000/music/upload",
+							"host": [
+								"localhost"
+							],
+							"port": "20000",
+							"path": [
+								"music",
+								"upload"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "修改翻唱",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/d:/Downloads/tmp/accompaniment.wav"
+								},
+								{
+									"key": "info",
+									"value": "{\n    \"user\":1,\n    \"title\":\"七里香\",\n    \"artist\": \"周杰伦\",\n    \"ai\": \"孙燕姿\"\n}",
+									"contentType": "application/json",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:20000/music/upload",
+							"host": [
+								"localhost"
+							],
+							"port": "20000",
+							"path": [
+								"music",
+								"upload"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "随便听听",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "stream",
+			"item": [
+				{
+					"name": "添加spleeter",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "注册",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "登录",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
