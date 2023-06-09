@@ -151,6 +151,6 @@ https://github.com/Illumina/licenses/blob/master/gpl-3.0.txt
 
 ## donate
 
-<img src="https://raw.githubusercontent.com/logonod/bookmark/master/images/donate.jpg" width = "400" align=center />
+<img src="http://asset.liuzeyu.me/donate.jpg" width = "400" align=center />
 
-<img src="http://blog.liuzeyu.me/images/wechat.jpg" width = "400" align=center />
+<img src="http://asset.liuzeyu.me/mywechat.jpg" width = "400" align=center />
