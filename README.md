@@ -149,8 +149,3 @@ https://github.com/Illumina/licenses/blob/master/gpl-3.0.txt
 
 本项目仅供学习娱乐，请勿滥用。请遵守知乎用户协议合理使用互联网
 
-## donate
-
-<img src="http://asset.liuzeyu.me/donate.jpg" width = "400" align=center />
-
-<img src="http://asset.liuzeyu.me/mywechat.jpg" width = "400" align=center />
